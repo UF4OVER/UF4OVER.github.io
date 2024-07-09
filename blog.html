@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.0.0/marked.min.js"></script>
+    <style>
+        body {
+            font-family: 'Fira Code', monospace;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .rounded-box {
+            background-color: rgba(227, 156, 15, 0.37);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            width: calc(50% - 40px); /* Adjusted for padding and margin */
+            max-height: calc(80% - 40px); /* Adjusted for padding and margin */
+            overflow-y: auto; /* Add vertical scrollbars if needed */
+            box-shadow: 0 4px 6px rgba(163, 75, 75, 0.38);
+        }
+        .header {
+            position: relative;
+
+            top: 20px;
+            left: 20px;
+            color: #000000;
+            z-index: 1;
+        }
+        .content {
+            width: 80%;
+            height: 80%;
+            display: flex;
+            background-color: rgba(227, 156, 15, 0.50); /* White with 70% opacity */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Padding inside the box */
+            margin: 20px; /* Margin around the box */
+            width: 50%; /* Width of the box */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0.7;
+            transition: opacity 0.5s ease;
+        }
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            color: #fff;
+            z-index: 1;
+        }
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #fff;
+            pointer-events: none;
+            left: 0;
+            top: 0;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>UF4's Digital Odyssey</h1>
+        <p>Exploring the Cosmos of Code</p>
+    </div>
+    <div class="rounded-box" id="content"></div>
+    <h3>我的邮箱:uf4hp@foxmail.com</h3>
+    <div class="footer">
+        <p>© 2023 UF4. All rights reserved.</p>
+    </div>
+
+    <script>
+        function randomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function setRandomGradientBackground() {
+            const color1 = randomColor();
+            const color2 = randomColor();
+            document.body.style.background = `linear-gradient(to right, ${color1}, ${color2})`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setRandomGradientBackground();
+
+            fetch('READ.MD')
+                .then(response => response.text())
+                .then(text => {
+                    const html = marked.parse(text);
+                    document.getElementById('content').innerHTML = html;
+                })
+                .catch(error => console.error('Error loading or parsing file:', error));
+
+            const cursor = document.createElement('div');
+            cursor.classList.add('cursor');
+            document.body.appendChild(cursor);
+
+            let lastX = 0;
+            let lastY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                if (lastX !== e.clientX || lastY !== e.clientY) {
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                    requestAnimationFrame(() => {
+                        cursor.style.left = `${e.clientX - cursor.offsetWidth / 2}px`;
+                        cursor.style.top = `${e.clientY - cursor.offsetHeight / 2}px`;
+                    });
+                }
+            });
+
+            document.addEventListener('click', () => {
+                cursor.style.transform = 'scale(2)';
+                setTimeout(() => {
+                    cursor.style.transform = 'scale(1)';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
