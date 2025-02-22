@@ -13,7 +13,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
 def run_server():
     # 切换到项目根目录
-    os.chdir('../..')
+    os.chdir('..')
     
     # 设置服务器
     port = 8000
