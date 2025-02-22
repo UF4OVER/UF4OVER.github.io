@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <!-- Markdown解析和代码高亮 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/github.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="../pic/logo.jpg" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="../index.html" class="nav-link">返回首页</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="blog-container">
+        <!-- 文章列表 -->
+        <aside class="article-list">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索文章...">
+            </div>
+            <div id="articleList" class="article-items">
+                <!-- 文章列表将通过JS动态加载 -->
+            </div>
+        </aside>
+
+        <!-- 文章内容 -->
+        <main class="article-content">
+            <div id="content">
+                <div class="welcome-message">
+                    <h1>👋 欢迎来到我的博客</h1>
+                    <p>请从左侧选择一篇文章开始阅读</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- 文章目录 -->
+        <aside class="article-toc">
+            <div class="toc-title">目录</div>
+            <div id="toc" class="toc-content">
+                <!-- 目录将通过JS动态生成 -->
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // 获取文章列表
+        async function fetchArticles() {
+            try {
+                const response = await fetch('/api/articles');
+                const articles = await response.json();
+                renderArticleList(articles);
+            } catch (error) {
+                console.error('获取文章列表失败:', error);
+                // 使用本地文章列表作为备份
+                const articles = [
+                    {
+                        title: "2024-02-22.md",
+                        path: "./docs/2024-02-22.md",
+                        date: "2024-02-22"
+                    }
+                ];
+                renderArticleList(articles);
+            }
+        }
+
+        // 渲染文章列表
+        function renderArticleList(articles) {
+            const articleList = document.getElementById('articleList');
+            articleList.innerHTML = articles.map(article => `
+                <div class="article-item" data-path="${article.path}">
+                    <h3>${article.title}</h3>
+                    <span class="article-date">${article.date}</span>
+                </div>
+            `).join('');
+
+            // 添加点击事件
+            document.querySelectorAll('.article-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    loadArticle(item.dataset.path);
+                    // 添加选中状态
+                    document.querySelectorAll('.article-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                });
+            });
+        }
+
+        // 加载文章内容
+        async function loadArticle(path) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error('文章加载失败');
+                
+                const markdown = await response.text();
+                const content = marked.parse(markdown);
+                
+                document.getElementById('content').innerHTML = content;
+                
+                // 代码高亮
+                document.querySelectorAll('pre code').forEach(block => {
+                    hljs.highlightBlock(block);
+                });
+
+                // 生成目录
+                generateTOC();
+                
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error-message">
+                        <h2>⚠️ 文章加载失败</h2>
+                        <p>请确保文章文件存在且路径正确</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 生成目录
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            toc.innerHTML = '';
+            
+            const headers = document.querySelectorAll('#content h1, #content h2, #content h3');
+            headers.forEach((header, index) => {
+                // 为标题添加ID
+                header.id = `header-${index}`;
+                
+                const link = document.createElement('a');
+                link.textContent = header.textContent;
+                link.href = `#${header.id}`;
+                link.className = `toc-item toc-${header.tagName.toLowerCase()}`;
+                
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    header.scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                toc.appendChild(link);
+            });
+        }
+
+        // 搜索功能
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.article-item').forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                item.style.display = title.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', fetchArticles);
+    </script>
+</body>
+</html>
