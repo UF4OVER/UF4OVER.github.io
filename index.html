@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <!-- 在head部分增加以下meta -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 在<head>部分添加移动端图标 -->
+    <link rel="apple-touch-icon" href="/pic/logo.jpg">
     <title>我的个人博客</title>
+
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
@@ -12,6 +18,7 @@
     <div class="cherry-blossom"></div>
     
     <header class="animate__animated animate__fadeInDown">
+        <button class="mobile-menu-toggle">☰</button>
         <nav>
             <div class="logo">
                 <img src="/pic/logo.jpg" alt="Logo" class="rotating-logo">
@@ -21,6 +28,7 @@
                 <li><a href="/blog/blog.html" class="nav-link">博客</a></li>
                 <li><a href="/home/gallery.html" class="nav-link">图库</a></li>
                 <li><a href="/login/login.html" class="nav-link">登录</a></li>
+
             </ul>
         </nav>
     </header>
@@ -68,9 +76,8 @@
 
     <footer>
         <div class="social-links">
-            <a href="#" class="social-icon">微博</a>
-            <a href="#" class="social-icon">B站</a>
-            <a href="github.com/UF4OVER" class="social-icon">GitHub</a>
+            <a href="https://space.bilibili.com/1000215778?spm_id_from=333.1007.0.0" class="social-icon">B站</a>
+            <a href="https://github.com/UF4OVER" class="social-icon">GitHub</a>
         </div>
         <p>&copy; 2024 我的博客 | Made with UF4</p>
     </footer>
