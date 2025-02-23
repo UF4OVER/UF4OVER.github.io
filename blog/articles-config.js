@@ -1,15 +1,15 @@
 const BLOG_ARTICLES = [
     {
-        title: "对的.md",
-        date: "2024-03-20",
+        title: "登录逻辑.md",
+        date: "2024-02-23",
         path: "https://raw.githubusercontent.com/UF4OVER/UF4OVER.github.io/main/blog/docs/2024-02-23.md", 
-        tags: ["标签1", "标签2"]
+        tags: ["Python", "OAuth2.0", "Huawei"]
     },
     {
-        title: "热天发热.md",
-        date: "2024-03-21",
+        title: "PyQt-SiliconUI.md",
+        date: "2024-02-22",
         path: "https://raw.githubusercontent.com/UF4OVER/UF4OVER.github.io/main/blog/docs/2024-02-22.md",  
-        tags: ["标签3", "标签4"]
+        tags: ["PyQt-SiliconUI", "Python"]
     },
 
 ];
