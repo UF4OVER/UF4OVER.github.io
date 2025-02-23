@@ -2,12 +2,10 @@
 <html lang="zh-CN">
 <head>
     <!-- 在head部分增加以下meta -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 在<head>部分添加移动端图标 -->
-    <link rel="apple-touch-icon" href="/pic/logo.jpg">
+    <link rel="apple-touch-icon" href="/pic/logo1.jpg">
     <title>我的个人博客</title>
 
     <link rel="stylesheet" href="styles.css">
@@ -16,20 +14,17 @@
 
 <body>
     <div class="cherry-blossom"></div>
-    
     <header class="animate__animated animate__fadeInDown">
-        <button class="mobile-menu-toggle">☰</button>
         <nav>
             <div class="logo">
-                <img src="/pic/logo.jpg" alt="Logo" class="rotating-logo">
+                <img src="/pic/logo1.jpg" alt="Logo" class="rotating-logo">
             </div>
-            <ul>
-                <li><a href="#home" class="nav-link">首页</a></li>
-                <li><a href="/blog/blog.html" class="nav-link">博客</a></li>
-                <li><a href="/home/gallery.html" class="nav-link">图库</a></li>
-                <li><a href="/login/login.html" class="nav-link">登录</a></li>
-
-            </ul>
+            
+            <div class="menu-toggle">
+                <span><a href="#home" class="nav-link">首页</a></span>
+                <span><a href="/blog/blog.html" class="nav-link">博客</a></span>
+                <span><a href="/home/gallery.html" class="nav-link">图库</a></span>
+            </div>
         </nav>
     </header>
 
