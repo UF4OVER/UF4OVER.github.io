@@ -2,16 +2,13 @@
 <html lang="zh-CN">
 <head>
     <!-- 在head部分增加以下meta -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="/pic/logo1.jpg">
     <title>我的个人博客</title>
-
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
-
 <body>
     <div class="cherry-blossom"></div>
     <header class="animate__animated animate__fadeInDown">
@@ -19,12 +16,17 @@
             <div class="logo">
                 <img src="/pic/logo1.jpg" alt="Logo" class="rotating-logo">
             </div>
-            
+            <div id="g-btn"></div>
             <div class="menu-toggle">
                 <span><a href="#home" class="nav-link">首页</a></span>
                 <span><a href="/blog/blog.html" class="nav-link">博客</a></span>
                 <span><a href="/home/gallery.html" class="nav-link">图库</a></span>
             </div>
+            <!-- 添加主题切换按钮 -->
+            <label class="theme-toggle-label">
+                <input type="checkbox" id="themeToggle" class="theme-toggle-checkbox">
+                <span class="theme-toggle-slider round"></span> <!-- 添加 round 类以确保样式一致 -->
+            </label>
         </nav>
     </header>
 
@@ -76,5 +78,6 @@
         </div>
         <p>&copy; 2024 我的博客 | Made with UF4</p>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

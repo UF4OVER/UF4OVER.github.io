@@ -58,34 +58,6 @@ window.addEventListener('resize', () => {
     }, 300);
 });
 
-// 移动端菜单控制
-document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    // 切换菜单
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    // 点击导航链接时关闭菜单
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-
-    // 点击页面其他区域关闭菜单
-    document.addEventListener('click', (e) => {
-        if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    });
-});
-
 // 添加滚动时导航栏效果
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
@@ -97,13 +69,26 @@ window.addEventListener('scroll', () => {
         header.style.boxShadow = 'none';
     }
 });
-// 检测是否是移动端，移动端时显示menu，隐藏nav-menu，桌面端时显示nav-menu，隐藏menu
-if (navigator.userAgent.indexOf('Mobile') > -1) {
-    document.querySelector('.menu-toggle').style.display = 'block';
-    document.querySelector('.nav-menu').style.display = 'none';
-    console.log('移动端');
-} else {
-    document.querySelector('.menu-toggle').style.display = 'none';
-    document.querySelector('.nav-menu').style.display = 'block';
-    console.log('桌面端');
+
+// 主题切换逻辑
+const themeToggle = document.getElementById('themeToggle');
+
+// 检查本地存储中的主题设置并应用
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    document.body.classList.add(savedTheme);
+    themeToggle.checked = savedTheme === 'dark-theme';
 }
+
+// 主题切换事件监听器
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark-theme');
+    } else {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light-theme');
+    }
+});
