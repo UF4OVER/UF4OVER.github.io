@@ -26,8 +26,7 @@ function showDefaultContent() {
     contentElement.innerHTML = `
         <div class="default-message">
             <h2>欢迎来到我的博客</h2>
-            <p>这里是充满创意和梦想的天地~</p>
-            <p>请从左侧选择一篇文章开始阅读。</p>
+            <p>这里是充满创意和梦想的天地~请从左侧选择一篇文章开始阅读。</p>
         </div>
     `;
 }
@@ -121,4 +120,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 绑定搜索事件
     document.getElementById('searchInput').addEventListener('input', searchArticles);
 
-}); 
+});
+
+const themeToggle = document.getElementById('themeToggle');
+
+// 检查本地存储中的主题设置并应用
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    document.body.classList.add(savedTheme);
+    themeToggle.checked = savedTheme === 'dark-theme';
+}
+
+// 主题切换事件监听器
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark-theme');
+    } else {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light-theme');
+    }
+});
+

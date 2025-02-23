@@ -69,6 +69,49 @@
     transform: rotate(90deg);
 }
 
+/* 暗黑主题样式 */
+body.dark-theme .gallery-container {
+    background: #1e1e1e;
+}
+
+body.dark-theme .gallery-grid {
+    background: #2e2e2e;
+}
+
+body.dark-theme .gallery-item {
+    background: #3e3e3e;
+    color: #e0e0e0;
+}
+
+body.dark-theme .gallery-item img {
+    border-color: #5e5e5e;
+}
+
+body.dark-theme .gallery-item:hover {
+    background: #3e3e3e;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+body.dark-theme .gallery-item:hover img {
+    transform: scale(1.03);
+}
+
+body.dark-theme .modal {
+    background: rgba(0,0,0,0.9);
+}
+
+body.dark-theme .modal img {
+    border-color: #5e5e5e;
+}
+
+body.dark-theme .modal-close {
+    color: white;
+}
+
+body.dark-theme .modal-close:hover {
+    color: #ea51c0;
+}
+
 /* 响应式调整 */
 @media screen and (max-width: 768px) {
     .gallery-item {

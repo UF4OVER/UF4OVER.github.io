@@ -6,7 +6,6 @@
     <title>图片画廊</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="gallery.css">
-    <script src="gallery-config.js"></script>
     <!-- 添加 Masonry 库 -->
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <!-- 添加 imagesLoaded 库以确保图片加载后再布局 -->
@@ -21,6 +20,11 @@
             <ul>
                 <li><a href="../index.html" class="nav-link">返回首页</a></li>
             </ul>
+            <!-- 添加主题切换按钮 -->
+            <label class="theme-toggle-label">
+                <input type="checkbox" id="themeToggle" class="theme-toggle-checkbox">
+                <span class="theme-toggle-slider round"></span> <!-- 添加 round 类以确保样式一致 -->
+            </label>
         </nav>
     </header>
 
@@ -35,82 +39,7 @@
         <span class="modal-close">&times;</span>
         <img id="modalImage" src="" alt="预览图片">
     </div>
-
-    <script>
-        // 初始化 Masonry
-        let msnry;
-        const grid = document.querySelector('.gallery-grid');
-
-        function initMasonry() {
-            msnry = new Masonry(grid, {
-                itemSelector: '.gallery-item',
-                columnWidth: '.gallery-item',
-                gutter: 20,
-                fitWidth: true,
-                transitionDuration: '0.3s'
-            });
-        }
-
-        function loadGalleryImages() {
-            GALLERY_IMAGES.forEach(imagePath => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                
-                const img = document.createElement('img');
-                img.src = imagePath;
-                img.alt = '画廊图片';
-                
-                item.appendChild(img);
-                grid.appendChild(item);
-            });
-
-            // 等待所有图片加载完成后初始化 Masonry
-            imagesLoaded(grid).on('done', function() {
-                initMasonry();
-            });
-
-            // 为每个图片添加点击事件
-            document.querySelectorAll('.gallery-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const img = item.querySelector('img');
-                    openModal(img.src);
-                });
-            });
-        }
-
-        // 模态框功能
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
-        const closeBtn = document.querySelector('.modal-close');
-
-        function openModal(imagePath) {
-            modal.style.display = 'flex';
-            modalImg.src = imagePath;
-        }
-
-        closeBtn.onclick = () => modal.style.display = 'none';
-        
-        window.onclick = (event) => {
-            if (event.target === modal) modal.style.display = 'none';
-        };
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                modal.style.display = 'none';
-            }
-        });
-
-        // 监听窗口大小变化，重新布局
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                msnry.layout();
-            }, 200);
-        });
-
-        // 页面加载完成后执行
-        document.addEventListener('DOMContentLoaded', loadGalleryImages);
-    </script>
+    <script src="gallery-config.js"></script>
+    <script src="gallery.js"></script>
 </body>
 </html>
