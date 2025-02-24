@@ -10,5 +10,6 @@
     <orderEntry type="library" name="marked" level="application" />
     <orderEntry type="library" name="imagesloaded" level="application" />
     <orderEntry type="library" name="masonry-layout" level="application" />
+    <orderEntry type="library" name="js-sdk-pro" level="application" />
   </component>
 </module>
