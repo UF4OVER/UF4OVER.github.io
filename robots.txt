@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /MineWeb/
+Disallow: /assets/
+Disallow: /*?*
+
+Sitemap: https://uf4.top/sitemap-index.xml
